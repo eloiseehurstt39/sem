@@ -1,4 +1,4 @@
 hi
 Its eloise hurst
 my age is 19
-![workflow](https://github.com/<UserName>/<RepositoryName>/actions/workflows/main.yml/badge.svg)
+![workflow](https://img.shields.io/badge/ELOISE-HURST-brightgreen.svg)
