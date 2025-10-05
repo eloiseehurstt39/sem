@@ -8,7 +8,8 @@ public class App
         System.out.println("boo yahha ayah");
         System.out.println("just after changing to java 17 from 25");
         System.out.println("Just checking on tuesday");
-
+// Connect to MongoDB
+        MongoClient mongoClient = new MongoClient("mongo-dbserver");
 
     }
 }
