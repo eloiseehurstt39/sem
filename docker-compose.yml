@@ -1,12 +1,30 @@
-version: '3'
+version: '3.8'
+
 services:
-  # Application Dockerfile is in same folder which is .
   app:
     build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    # Optional but helpful if your app needs environment vars:
+    environment:
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_USER=root
+      - DB_PASSWORD=example
+      - DB_NAME=employees
 
-  # db is is db folder
   db:
     build: db/.
+    container_name: semethods-db-1
     restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: employees
     ports:
       - "33060:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-pexample"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
