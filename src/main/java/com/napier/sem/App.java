@@ -43,19 +43,24 @@ public class App
         int retries = 10;
         for (int i = 0; i < retries; ++i)
         {
-            System.out.println("Connnecting to database...");
+            System.out.println("Connecting to database...");
             try
             {
                 // Wait a bit for db to start
                 Thread.sleep(3000);
-                // Connect to database
-                con = DriverManager.getConnection("jdbc:mysql://localhost:33060/employees?allowPublicKeyRetrieval=true&useSSL=false", "root", "example");
+
+                // For local testing, use localhost:33060
+                // For Docker, replace with "db:3306"
+                con = DriverManager.getConnection(
+                        "jdbc:mysql://localhost:33060/employees?allowPublicKeyRetrieval=true&useSSL=false",
+                        "root", "example");
+
                 System.out.println("Successfully connected");
                 break;
             }
             catch (SQLException sqle)
             {
-                System.out.println("Failed to connect to database attempt " + Integer.toString(i));
+                System.out.println("Failed to connect to database attempt " + i);
                 System.out.println(sqle.getMessage());
             }
             catch (InterruptedException ie)
@@ -83,6 +88,7 @@ public class App
             }
         }
     }
+
     public static Employee getEmployee(int ID)
     {
         try
@@ -96,8 +102,7 @@ public class App
                             + "WHERE emp_no = " + ID;
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
-            // Return new employee if valid.
-            // Check one is returned
+
             if (rset.next())
             {
                 Employee emp = new Employee();
@@ -116,6 +121,7 @@ public class App
             return null;
         }
     }
+
     public static void main(String[] args)
     {
         // Create new Application
@@ -123,8 +129,10 @@ public class App
 
         // Connect to database
         a.connect();
+
         // Get Employee
         Employee emp = a.getEmployee(255530);
+
         // Display results
         a.displayEmployee(emp);
 
