@@ -1,4 +1,4 @@
-FROM openjdk:latest
+FROM eclipse-temurin:17-jdk-jammy
 COPY ./target/seMethods-1.0-SNAPSHOT-jar-with-dependencies.jar /tmp
 WORKDIR /tmp
 ENTRYPOINT ["java", "-jar", "seMethods-1.0-SNAPSHOT-jar-with-dependencies.jar"]
